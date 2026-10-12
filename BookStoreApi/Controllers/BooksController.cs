@@ -8,7 +8,7 @@ namespace BookStoreApi.Controllers
     [ApiController]
     public class BooksController : ControllerBase
     {
-        // Kitablar yaddaşda saxlanılır
+ 
         private static List<Book> books = new List<Book>
         {
             new Book { Id = 1, Title = "Clean Code", Author = "Robert Martin", Category = "Programming", Price = 35, Stock = 10, PageCount = 464, PublishedYear = 2008, IsAvailable = true },
@@ -19,7 +19,7 @@ namespace BookStoreApi.Controllers
             new Book { Id = 6, Title = "The Martian", Author = "Andy Weir", Category = "Science Fiction", Price = 30, Stock = 7, PageCount = 369, PublishedYear = 2011, IsAvailable = true }
         };
 
-        // Məlumatların düzgünlüyünü yoxlayırıq
+     
         private bool IsValidBook(Book book)
         {
             return !string.IsNullOrWhiteSpace(book.Title)
@@ -32,14 +32,14 @@ namespace BookStoreApi.Controllers
                 && book.PublishedYear <= DateTime.Now.Year;
         }
 
-        // 1. Bütün kitabları qaytarır
+ 
         [HttpGet]
         public ActionResult<List<Book>> GetAll()
         {
             return Ok(books);
         }
 
-        // 2. ID-yə görə kitabı tapır
+
         [HttpGet("{id:int}")]
         public ActionResult<Book> GetById(int id)
         {
@@ -51,7 +51,6 @@ namespace BookStoreApi.Controllers
             return Ok(book);
         }
 
-        // 3. Yeni kitab əlavə edir
         [HttpPost]
         public ActionResult<Book> Create(Book book)
         {
@@ -71,7 +70,7 @@ namespace BookStoreApi.Controllers
             );
         }
 
-        // 4. Kitabın bütün məlumatlarını yeniləyir
+
         [HttpPut("{id:int}")]
         public ActionResult<Book> Update(int id, Book updatedBook)
         {
@@ -95,7 +94,7 @@ namespace BookStoreApi.Controllers
             return Ok(book);
         }
 
-        // 5. Yalnız stok sayını yeniləyir
+  
         [HttpPatch("{id:int}/stock")]
         public ActionResult<Book> UpdateStock(int id, [FromQuery] int stock)
         {
@@ -112,7 +111,6 @@ namespace BookStoreApi.Controllers
             return Ok(book);
         }
 
-        // 6. Kitabı silir
         [HttpDelete("{id:int}")]
         public IActionResult Delete(int id)
         {
@@ -126,7 +124,7 @@ namespace BookStoreApi.Controllers
             return NoContent();
         }
 
-        // 7. Kitab adına görə axtarış
+      
         [HttpGet("search")]
         public ActionResult<List<Book>> Search([FromQuery] string title)
         {
@@ -142,7 +140,7 @@ namespace BookStoreApi.Controllers
             return Ok(result);
         }
 
-        // 8. Müəllifə görə axtarış
+      
         [HttpGet("author")]
         public ActionResult<List<Book>> SearchByAuthor([FromQuery] string name)
         {
@@ -158,7 +156,7 @@ namespace BookStoreApi.Controllers
             return Ok(result);
         }
 
-        // 9. Kateqoriyaya görə filtr
+
         [HttpGet("category/{category}")]
         public ActionResult<List<Book>> GetByCategory(string category)
         {
@@ -171,7 +169,6 @@ namespace BookStoreApi.Controllers
             return Ok(result);
         }
 
-        // 10. Qiymət aralığına görə filtr
         [HttpGet("filter")]
         public ActionResult<List<Book>> FilterByPrice(
             [FromQuery] decimal minPrice,
@@ -187,7 +184,6 @@ namespace BookStoreApi.Controllers
             return Ok(result);
         }
 
-        // 11. Stokda olan və aktiv kitablar
         [HttpGet("available")]
         public ActionResult<List<Book>> GetAvailable()
         {
@@ -198,7 +194,6 @@ namespace BookStoreApi.Controllers
             return Ok(result);
         }
 
-        // 12. Nəşr ilinə görə filtr
         [HttpGet("year/{year:int}")]
         public ActionResult<List<Book>> GetByYear(int year)
         {
@@ -212,7 +207,7 @@ namespace BookStoreApi.Controllers
             return Ok(result);
         }
 
-        // 13. Qiymətə görə sıralama
+
         [HttpGet("sorted")]
         public ActionResult<List<Book>> SortByPrice(
             [FromQuery] string direction = "asc")
@@ -226,7 +221,7 @@ namespace BookStoreApi.Controllers
             return BadRequest("Direction asc və ya desc olmalıdır.");
         }
 
-        // 14. Kitab statistikası
+
         [HttpGet("statistics")]
         public IActionResult GetStatistics()
         {
